@@ -3,7 +3,7 @@ __author__ = 'yunbo'
 import torch
 import torch.nn as nn
 from core.layers.CausalmLSTMCell import CausalmLSTMCell
-from core.layers.GraddientHighwayUnit import GHU
+from core.layers.GradientHighwayUnit import GHU
 
 class RNN(nn.Module):
     def __init__(self, num_layers, num_hidden, configs):
