@@ -1,2 +1,5 @@
 env/
 data/
+results/
+checkpoints/
+error.txt
