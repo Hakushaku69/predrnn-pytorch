@@ -103,7 +103,33 @@ def test(model, test_input_handle, configs, itr):
 
             psnr[i] += metrics.batch_psnr(pred_frm, real_frm)
             for b in range(configs.batch_size):
-                score, _ = compare_ssim(pred_frm[b], real_frm[b], full=True, multichannel=True)
+                # Process each image in the batch
+                real_img = real_frm[b]
+                pred_img = pred_frm[b]
+
+                # For grayscale, remove singleton channel
+                if configs.img_channel == 1:
+                    real_img = real_img.squeeze()
+                    pred_img = pred_img.squeeze()
+
+                # Determine image dimensions
+                if configs.img_channel == 3:
+                    h, w, _ = real_img.shape
+                else:
+                    h, w = real_img.shape
+
+                min_dim = min(h, w)
+                win_size = min(7, min_dim)
+                if win_size % 2 == 0:
+                    win_size -= 1
+                win_size = max(win_size, 3)  # Ensure minimum window size of 3
+
+                # Set channel_axis based on image type
+                channel_axis = -1 if configs.img_channel == 3 else None
+
+                # Calculate SSIM with appropriate parameters
+                score, _ = compare_ssim(pred_img, real_img, full=True,
+                                        channel_axis=channel_axis, win_size=win_size)
                 ssim[i] += score
 
         # save prediction examples
