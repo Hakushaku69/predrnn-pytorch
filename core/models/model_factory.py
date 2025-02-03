@@ -1,7 +1,7 @@
 import os
 import torch
 from torch.optim import Adam
-from core.models import predrnn, predrnn_v2, action_cond_predrnn, action_cond_predrnn_v2, predrnn_mLSTM
+from core.models import predrnn, predrnn_v2, action_cond_predrnn, action_cond_predrnn_v2, predrnn_mLSTM, predrnn_mLSTM_GHU
 
 class Model(object):
     def __init__(self, configs):
@@ -12,6 +12,7 @@ class Model(object):
             'predrnn': predrnn.RNN,
             'predrnn_v2': predrnn_v2.RNN,
             'predrnn_mLSTM': predrnn_mLSTM.RNN,
+            'predrnn_mLSTM_GHU': predrnn_mLSTM_GHU.RNN,
             'action_cond_predrnn': action_cond_predrnn.RNN,
             'action_cond_predrnn_v2': action_cond_predrnn_v2.RNN,
         }
